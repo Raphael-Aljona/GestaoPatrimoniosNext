@@ -76,60 +76,7 @@
     margin-bottom: 48px;
 }
 
-.history_table {
-    width: 100%;
 
-    border-collapse: separate;
-    border-spacing: 0 32px;
-}
-
-.history_table th {
-    padding: 0 24px 12px;
-
-    border-bottom: 1px solid #c4c8ce;
-
-    text-align: center;
-
-    font-size: 15px;
-    font-weight: 400;
-
-    color: var(--cinza-texto);
-}
-
-.history_table td {
-    background-color: #ffffff;
-
-    padding: 24px;
-
-    text-align: center;
-
-    font-size: 15px;
-    color: #000000;
-}
-
-.history_table tbody tr td:first-child {
-    border-radius: 8px 0 0 8px;
-}
-
-.history_table tbody tr td:last-child {
-    border-radius: 0 8px 8px 0;
-}
-
-.status_badge {
-    display: inline-block;
-
-    padding: 10px 26px;
-
-    border-radius: 10px;
-
-    background-color: #ccffe0;
-    color: #00851c;
-}
-
-.history_table a {
-    color: var(--vermelho);
-    font-size: 20px;
-}
 
 /* PAGINAÇÃO */
 

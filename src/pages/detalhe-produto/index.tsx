@@ -1,12 +1,14 @@
 import styles from "./detalhe-patrimonio.module.css";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import {
     faArrowLeft,
     faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/src/components/header/header";
+import CardHistorico from "@/src/components/card-historico/card-historico";
+import ListaHistorico from "@/src/components/lista-historico/lista-historico";
 
 const DetalhePatrimonio = () => {
     return (
@@ -23,7 +25,7 @@ const DetalhePatrimonio = () => {
                         href="#"
                         className={styles.back_link}
                     >
-                        <FontAwesomeIcon icon={faArrowLeft} />
+                        <FontAwesomeIcon icon={faArrowLeft}/>
                         Voltar
                     </a>
 
@@ -72,54 +74,7 @@ const DetalhePatrimonio = () => {
                     aria-label="Lista de histórico do patrimônio"
                 >
                     <h2>Histórico</h2>
-
-                    <table className={styles.history_table}>
-                        <thead>
-                        <tr>
-                            <th>Data</th>
-                            <th>Tipo de movimentação</th>
-                            <th>Origem</th>
-                            <th>Destino</th>
-                            <th>Responsável</th>
-                            <th>Justificativa</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr>
-                            <td data-label="Data">
-                                11/02/2026
-                            </td>
-
-                            <td data-label="Tipo de movimentação">
-                                    <span className={styles.status_badge}>
-                                        Transferência
-                                    </span>
-                            </td>
-
-                            <td data-label="Origem">
-                                Sala 07/08
-                            </td>
-
-                            <td data-label="Destino">
-                                Sala 09/10
-                            </td>
-
-                            <td data-label="Responsável">
-                                Gustavo Lima
-                            </td>
-
-                            <td data-label="Justificativa">
-                                <a
-                                    href="#"
-                                    aria-label="Ver justificativa da transferência"
-                                >
-                                    <FontAwesomeIcon icon={faCircleInfo} />
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                    <ListaHistorico/>
                 </section>
             </main>
         </>
