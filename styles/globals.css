@@ -6,7 +6,6 @@
   font-family:  "Montserrat", sans-serif;
 }
 
-
 :root{
   --tamanho-fonte-padrao: 16px;
   --tamanho-fonte-titulo: 35px;
@@ -29,4 +28,14 @@ a {
 button,
 input {
   font-family: inherit;
+}
+
+.layout_guide{
+  width: 80%;
+}
+
+@media screen and (max-width: 1200px){
+  .layout_guide {
+    width: 90%;
+  }
 }
