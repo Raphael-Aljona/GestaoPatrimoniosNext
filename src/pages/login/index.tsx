@@ -1,6 +1,24 @@
 import styles from "./login.module.css";
+import {FormEvent, useState} from "react";
+import {auth} from "@/src/pages/api/authService";
 
 export default function Login() {
+
+    const [nif, setNif] = useState<string>("");
+    const [senha, setSenha] = useState<string>("");
+
+    async function login (e: React.FormEvent<HTMLFormElement>)  {
+        e.preventDefault();
+
+        try{
+            auth(nif, senha);
+
+            console.log("Logado com sucesso");
+        }catch (e){
+            console.log("Erro ao logar");
+        }
+    }
+
     return (
         <main className={styles.login_page}>
             <section
@@ -34,7 +52,7 @@ export default function Login() {
                 className={styles.login_area}
                 aria-label="Formulário de login"
             >
-                <form className={styles.login_form}>
+                <form onSubmit={login} className={styles.login_form}>
                     <h1>Login</h1>
 
                     <div className={styles.form_group}>
@@ -45,6 +63,8 @@ export default function Login() {
                             id="nif"
                             name="nif"
                             placeholder="Insira o seu NIF"
+                            value={nif}
+                            onChange={(e) => setNif(e.target.value)}
                             required
                         />
                     </div>
@@ -58,6 +78,8 @@ export default function Login() {
                                 id="senha"
                                 name="senha"
                                 placeholder="Insira a sua senha"
+                                value={senha}
+                                onChange={(e) => setSenha(e.target.value)}
                                 required
                             />
 

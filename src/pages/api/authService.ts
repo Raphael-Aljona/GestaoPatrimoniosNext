@@ -1,0 +1,18 @@
+import {api} from "@/src/pages/api/api";
+import secureLocalStorage from "react-secure-storage";
+
+export async function auth(nif:string, senha: string) {
+    try{
+        const response = await api.post("/Autenticacao/login", {
+            nif,
+            senha
+        });
+
+        const token = response.data.token;
+
+        secureLocalStorage.setItem("token", token);
+    }catch(e:any){
+        throw new Error(e.message);
+    }
+
+}
