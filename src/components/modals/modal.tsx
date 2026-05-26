@@ -1,9 +1,41 @@
 import styles from "./modal.module.css";
 
-const Modal = () => {
+const ModalJustificativa = () => {
     return (
         <>
-            {/* MODAL IMPORTAR */}
+            {/* MODAL JUSTIFICATIVA */}
+            <section className={styles.modal_overlay}>
+
+                <article
+                    className={`${styles.modal_container} ${styles.modal_justificativa}`}
+                >
+                    <a
+                        href="#"
+                        className={styles.modal_close}
+                    >
+                        x
+                    </a>
+
+                    <h1 className={styles.modal_title}>
+                        Justificativa
+                    </h1>
+
+                    <p className={styles.modal_text}>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Veritatis, quasi distinctio! Temporibus similique expedita
+                        laboriosam, assumenda officia veritatis amet doloremque esse
+                        obcaecati repudiandae architecto in sed facilis quas harum.
+                    </p>
+
+                </article>
+            </section>
+        </>
+    );
+};
+const ModalImportar = () => {
+
+    return (
+        <>
             <section className={styles.modal_overlay}>
 
                 <article
@@ -54,8 +86,12 @@ const Modal = () => {
                     </form>
                 </article>
             </section>
-
-            {/* MODAL TRANSFERIR */}
+        </>
+    )
+}
+const ModalTransferir = () => {
+    return (
+        <>
             <section className={styles.modal_overlay}>
 
                 <article
@@ -111,35 +147,8 @@ const Modal = () => {
                     </form>
                 </article>
             </section>
-
-            {/* MODAL JUSTIFICATIVA */}
-            <section className={styles.modal_overlay}>
-
-                <article
-                    className={`${styles.modal_container} ${styles.modal_justificativa}`}
-                >
-                    <a
-                        href="#"
-                        className={styles.modal_close}
-                    >
-                        x
-                    </a>
-
-                    <h1 className={styles.modal_title}>
-                        Justificativa
-                    </h1>
-
-                    <p className={styles.modal_text}>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Veritatis, quasi distinctio! Temporibus similique expedita
-                        laboriosam, assumenda officia veritatis amet doloremque esse
-                        obcaecati repudiandae architecto in sed facilis quas harum.
-                    </p>
-
-                </article>
-            </section>
         </>
     );
-};
+}
 
-export default Modal;
+export { ModalJustificativa, ModalImportar, ModalTransferir };
