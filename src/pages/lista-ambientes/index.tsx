@@ -10,122 +10,14 @@ import {
     faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/src/components/header/header";
+import ListaAmbiente from "@/src/components/lista-ambiente/lista-ambiente";
 
 const ListaLocais = () => {
     return (
         <>
             <Header/>
             <main className={styles.page_content}>
-                <section
-                    className={`${styles.page_header} layout_guide`}
-                    aria-labelledby="titulo_ambientes"
-                >
-                    <h1 id="titulo_ambientes">
-                        Ambientes
-                    </h1>
-
-                    <form
-                        className={styles.search_area}
-                        role="search"
-                    >
-                        <label
-                            htmlFor="pesquisa_ambiente"
-                            className={styles.sr_only}
-                        >
-                            Pesquisar ambiente
-                        </label>
-
-                        <input
-                            type="search"
-                            id="pesquisa_ambiente"
-                            name="pesquisaAmbiente"
-                            placeholder="Pesquise o ambiente"
-                        />
-
-                        <button
-                            type="button"
-                            className={styles.filter_button}
-                            aria-label="Filtrar ambientes"
-                        >
-                            <FontAwesomeIcon icon={faSliders} />
-                        </button>
-                    </form>
-                </section>
-
-                <section
-                    className={`${styles.table_section} layout_guide`}
-                    aria-label="Lista de ambientes"
-                >
-                    <table className={styles.environment_table}>
-                        <thead>
-                        <tr>
-                            <th>Local</th>
-                            <th>Responsável</th>
-                            <th>Detalhes</th>
-                        </tr>
-                        </thead>
-
-                        <tbody>
-                        <tr>
-                            <td>Sala 30/31 (anfiteatro)</td>
-
-                            <td>Samanta Melissa</td>
-
-                            <td>
-                                <a
-                                    href="#"
-                                    aria-label="Ver detalhes da Sala 30/31"
-                                >
-                                    <FontAwesomeIcon icon={faCircleInfo} />
-                                </a>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </section>
-
-                <nav
-                    className={styles.pagination}
-                    aria-label="Paginação"
-                >
-                    <button
-                        type="button"
-                        className={styles.pagination_button}
-                        aria-label="Página anterior"
-                    >
-                        ‹
-                    </button>
-
-                    <a
-                        href="#"
-                        className={`${styles.pagination_link} ${styles.current}`}
-                        aria-current="page"
-                    >
-                        1
-                    </a>
-
-                    <a
-                        href="#"
-                        className={styles.pagination_link}
-                    >
-                        2
-                    </a>
-
-                    <a
-                        href="#"
-                        className={styles.pagination_link}
-                    >
-                        3
-                    </a>
-
-                    <button
-                        type="button"
-                        className={styles.pagination_button}
-                        aria-label="Próxima página"
-                    >
-                        ›
-                    </button>
-                </nav>
+                <ListaAmbiente/>
             </main>
         </>
     );
