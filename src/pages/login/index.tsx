@@ -1,6 +1,9 @@
 import styles from "./login.module.css";
 import {FormEvent, useState} from "react";
 import {auth} from "@/src/pages/api/authService";
+import {erro, notificacao} from "@/src/utils/toast";
+import {router} from "next/client";
+import {decodeToken} from "@/src/utils/jwt";
 
 export default function Login() {
 
@@ -13,9 +16,14 @@ export default function Login() {
         try{
             auth(nif, senha);
 
-            console.log("Logado com sucesso");
+            notificacao("Autenticado com sucesso!");
+            await decodeToken();
+            setTimeout(()=>{
+                router.push("/lista-ambientes");
+            }, 2000)
+
         }catch (e){
-            console.log("Erro ao logar");
+            erro("NIF ou Senha incorretos.");
         }
     }
 

@@ -1,5 +1,6 @@
 import {api} from "@/src/pages/api/api";
 import secureLocalStorage from "react-secure-storage";
+import {jwtDecode} from "jwt-decode";
 
 export async function auth(nif:string, senha: string) {
     try{
@@ -14,5 +15,4 @@ export async function auth(nif:string, senha: string) {
     }catch(e:any){
         throw new Error(e.message);
     }
-
 }
