@@ -2,9 +2,40 @@ import styles from "./lista-patrimonio-por-sala.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSliders} from "@fortawesome/free-solid-svg-icons";
 import CardPatrimonioPorSala from "@/src/components/card-patrimonio-por-sala/card-patrimonio-por-sala";
+import {useEffect, useState} from "react";
+import {getLocal} from "@/src/pages/api/localService";
+import {getPatrimonio} from "@/src/pages/api/patrimonioService";
+import {erro} from "@/src/utils/toast";
 
+
+type Patrimonio = {
+    patrimonioID: string,
+    denominacao: string,
+    numeroPatrimonio: string,
+    valor: number,
+    imagem: string,
+    localizacaoID: string,
+    statusPatrimonioID: string,
+}
 
 const ListaPatrimonioPorSala = () => {
+
+    const [listaPatrimonioPorSala, setListaPatrimonioPorSala] = useState<Patrimonio[]>()
+
+    async function listagemPatrimonios() {
+        try {
+            const dados = await getPatrimonio()
+
+            setListaPatrimonioPorSala(dados)
+        } catch (error: any) {
+            erro(error.message)
+        }
+    }
+
+    useEffect(() => {
+        listagemPatrimonios();
+    }, []);
+
     return (
         <>
 
@@ -59,7 +90,21 @@ const ListaPatrimonioPorSala = () => {
                         <th>Transferir</th>
                     </tr>
                     </thead>
-                    <CardPatrimonioPorSala></CardPatrimonioPorSala>
+                    {listaPatrimonioPorSala ? listaPatrimonioPorSala?.map(value => (
+                        <CardPatrimonioPorSala key={value.patrimonioID}
+                                                patrimonioID={value.patrimonioID}
+                                               denominacao={value.denominacao}
+                                               numeroPatrimonio={value.numeroPatrimonio}
+                                               valor={value.valor}
+                                               imagem={value.imagem}
+                                               localizacaoID={value.localizacaoID}
+                                               statusPatrimonioID={value.statusPatrimonioID}
+                        ></CardPatrimonioPorSala>
+                    )) : <tbody>
+                    <tr>
+                        <td>Carregando lista...</td>
+                    </tr>
+                    </tbody>}
                 </table>
             </section>
 

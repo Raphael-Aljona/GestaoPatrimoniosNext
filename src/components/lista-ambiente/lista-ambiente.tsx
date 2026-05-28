@@ -87,7 +87,7 @@ const ListaAmbiente = () => {
                         <th>Responsável</th>
                     </tr>
                     </thead>
-                    {localizacoes.map((item, index) => (
+                    {localizacoes.map((item,) => (
                         <CardAmbiente key={item.localizacaoID}
                                       nomeLocal={item.nomeLocal}
                                       nomeArea={item.nomeArea}
