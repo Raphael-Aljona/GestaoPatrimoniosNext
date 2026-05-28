@@ -6,6 +6,7 @@ import {useEffect, useState} from "react";
 import {erro} from "@/src/utils/toast";
 import {getLocal} from "@/src/pages/api/localService";
 import {sair} from "@/src/pages/api/authService";
+import {router} from "next/client";
 
 type Localizacao = {
     areaID: string;
@@ -89,9 +90,10 @@ const ListaAmbiente = () => {
                     </thead>
                     {localizacoes.map((item,) => (
                         <CardAmbiente key={item.localizacaoID}
-                                      nomeLocal={item.nomeLocal}
-                                      nomeArea={item.nomeArea}
-                                      responsavel={item.responsavel}></CardAmbiente>
+                                      cardAmbiente={item}
+                                      onclick={() => {
+                                          router.push(`/lista-patrimonio-por-sala/${item.localizacaoID}`);
+                                      }}></CardAmbiente>
                     ))}
                 </table>
             </section>

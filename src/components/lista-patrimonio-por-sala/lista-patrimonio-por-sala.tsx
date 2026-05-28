@@ -1,11 +1,11 @@
 import styles from "./lista-patrimonio-por-sala.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSliders} from "@fortawesome/free-solid-svg-icons";
-import CardPatrimonioPorSala from "@/src/components/card-patrimonio-por-sala/card-patrimonio-por-sala";
 import {useEffect, useState} from "react";
-import {getLocal} from "@/src/pages/api/localService";
+import {useParams} from "next/navigation";
 import {getPatrimonio} from "@/src/pages/api/patrimonioService";
 import {erro} from "@/src/utils/toast";
+import CardPatrimonioPorSala from "@/src/components/card-patrimonio-por-sala/card-patrimonio-por-sala";
 
 
 type Patrimonio = {
@@ -18,23 +18,36 @@ type Patrimonio = {
     statusPatrimonioID: string,
 }
 
-const ListaPatrimonioPorSala = () => {
+type listaPatrimonio = {
+    localizacaoID: string,
+}
+
+const ListaPatrimonioPorSala = ({localizacaoID}:listaPatrimonio) => {
 
     const [listaPatrimonioPorSala, setListaPatrimonioPorSala] = useState<Patrimonio[]>()
 
     async function listagemPatrimonios() {
         try {
-            const dados = await getPatrimonio()
+            const dados:Patrimonio[] = await getPatrimonio()
 
-            setListaPatrimonioPorSala(dados)
+            const listaFiltrada = dados.filter(value => value.localizacaoID == localizacaoID)
+
+            console.log(`lista filtrada: ${listaFiltrada}`)
+
+            setListaPatrimonioPorSala(listaFiltrada)
         } catch (error: any) {
             erro(error.message)
         }
     }
 
+    console.log(`lista setada: ${listaPatrimonioPorSala}`)
+
     useEffect(() => {
+        if (!localizacaoID)  return;
+
         listagemPatrimonios();
-    }, []);
+    }, [localizacaoID]);
+
 
     return (
         <>
