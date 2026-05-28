@@ -2,8 +2,40 @@ import styles from "./lista-ambiente.module.css"
 import CardAmbiente from "@/src/components/card-ambiente/card-ambiente";
 import {faSliders} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {useEffect, useState} from "react";
+import {erro} from "@/src/utils/toast";
+import {getLocal} from "@/src/pages/api/localService";
+import {sair} from "@/src/pages/api/authService";
+
+type Localizacao = {
+    areaID: string;
+    descricaoSAP: string;
+    localSAP: number;
+    localizacaoID: string;
+    nomeLocal: string;
+    responsavel: string;
+    nomeArea: string;
+}
 
 const ListaAmbiente = () => {
+
+    const [localizacoes, setLocalizacoes] = useState<Localizacao[]>([]);
+
+    async function getLocalizacoes() {
+        try {
+            const dados = await getLocal();
+
+            setLocalizacoes(dados);
+        } catch (err) {
+            sair();
+            erro(err.message)
+        }
+    }
+
+    useEffect(() => {
+        getLocalizacoes();
+    }, [])
+
     return (
         <>
 
@@ -38,7 +70,7 @@ const ListaAmbiente = () => {
                         className={styles.filter_button}
                         aria-label="Filtrar ambientes"
                     >
-                        <FontAwesomeIcon icon={faSliders} />
+                        <FontAwesomeIcon icon={faSliders}/>
                     </button>
                 </form>
             </section>
@@ -51,11 +83,16 @@ const ListaAmbiente = () => {
                     <thead>
                     <tr>
                         <th>Local</th>
+                        <th>Área</th>
                         <th>Responsável</th>
-                        <th>Detalhes</th>
                     </tr>
                     </thead>
-                    <CardAmbiente></CardAmbiente>
+                    {localizacoes.map((item, index) => (
+                        <CardAmbiente key={item.localizacaoID}
+                                      nomeLocal={item.nomeLocal}
+                                      nomeArea={item.nomeArea}
+                                      responsavel={item.responsavel}></CardAmbiente>
+                    ))}
                 </table>
             </section>
 

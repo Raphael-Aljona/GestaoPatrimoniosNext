@@ -3,12 +3,15 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChevronDown, faUser} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useState} from "react";
 import {decodeToken} from "@/src/utils/jwt";
+import {erro} from "@/src/utils/toast";
+import {router} from "next/client";
 
 type Usuario = {
     id: string;
-    // nome: string;
-    // email: string;
+    nome: string;
+    email: string;
     NIF: string;
+    cargo: string;
 }
 
 const Header = () => {
@@ -16,17 +19,19 @@ const Header = () => {
     const [usuario, setUsuario] = useState<Usuario>();
 
     async function getUserSettings() {
-        const userInfos = await decodeToken();
+        try{
+            const userInfos = await decodeToken();
 
-        setUsuario(userInfos);
+            setUsuario(userInfos);
+        }catch(error:any){
+            erro(error.message)
+        }
     }
 
     useEffect(
         () => {
             getUserSettings()
         }, [])
-
-    console.log(usuario)
 
     return (
         <>
@@ -81,8 +86,8 @@ const Header = () => {
                         </button>
 
                         <div className={styles.user_info}>
-                            <strong>Késsia Milena</strong>
-                            <span>kessia@sp.senai.br</span>
+                            <strong>{usuario?.nome}</strong>
+                            <span>{usuario?.email}</span>
                         </div>
 
                         <button
