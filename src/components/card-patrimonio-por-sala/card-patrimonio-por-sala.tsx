@@ -12,21 +12,18 @@ type Patrimonio = {
     statusPatrimonioID: string,
 }
 
-const CardPatrimonioPorSala = ({
-                                   numeroPatrimonio,
-                                   patrimonioID,
-                                   statusPatrimonioID,
-                                   denominacao,
-                                   imagem,
-                                   localizacaoID,
-                                   valor
-                               }: Patrimonio) => {
+type CardProps = {
+    onclick: () => void;
+    patrimonio: Patrimonio;
+}
+
+const CardPatrimonioPorSala = ({patrimonio, onclick}:CardProps) => {
     return (
         <>
-            <tbody>
+            <tbody onClick={event => onclick()}>
             <tr>
-                <td>{numeroPatrimonio}</td>
-                <td>{denominacao}</td>
+                <td>{patrimonio.numeroPatrimonio}</td>
+                <td>{patrimonio.denominacao}</td>
                 <td>Mesa</td>
                 <td>11/02/26</td>
 

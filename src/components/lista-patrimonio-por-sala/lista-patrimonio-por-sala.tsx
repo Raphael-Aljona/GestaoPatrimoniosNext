@@ -2,10 +2,10 @@ import styles from "./lista-patrimonio-por-sala.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faSliders} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useState} from "react";
-import {useParams} from "next/navigation";
 import {getPatrimonio} from "@/src/pages/api/patrimonioService";
 import {erro} from "@/src/utils/toast";
 import CardPatrimonioPorSala from "@/src/components/card-patrimonio-por-sala/card-patrimonio-por-sala";
+import {router} from "next/client";
 
 
 type Patrimonio = {
@@ -22,13 +22,13 @@ type listaPatrimonio = {
     localizacaoID: string,
 }
 
-const ListaPatrimonioPorSala = ({localizacaoID}:listaPatrimonio) => {
+const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
 
     const [listaPatrimonioPorSala, setListaPatrimonioPorSala] = useState<Patrimonio[]>()
 
     async function listagemPatrimonios() {
         try {
-            const dados:Patrimonio[] = await getPatrimonio()
+            const dados: Patrimonio[] = await getPatrimonio()
 
             const listaFiltrada = dados.filter(value => value.localizacaoID == localizacaoID)
 
@@ -43,7 +43,7 @@ const ListaPatrimonioPorSala = ({localizacaoID}:listaPatrimonio) => {
     console.log(`lista setada: ${listaPatrimonioPorSala}`)
 
     useEffect(() => {
-        if (!localizacaoID)  return;
+        if (!localizacaoID) return;
 
         listagemPatrimonios();
     }, [localizacaoID]);
@@ -105,13 +105,10 @@ const ListaPatrimonioPorSala = ({localizacaoID}:listaPatrimonio) => {
                     </thead>
                     {listaPatrimonioPorSala ? listaPatrimonioPorSala?.map(value => (
                         <CardPatrimonioPorSala key={value.patrimonioID}
-                                                patrimonioID={value.patrimonioID}
-                                               denominacao={value.denominacao}
-                                               numeroPatrimonio={value.numeroPatrimonio}
-                                               valor={value.valor}
-                                               imagem={value.imagem}
-                                               localizacaoID={value.localizacaoID}
-                                               statusPatrimonioID={value.statusPatrimonioID}
+                                               onclick={() => {
+                                                   router.push(`/detalhe-produto/${value.patrimonioID}`)
+                                               }}
+                                               patrimonio={value}
                         ></CardPatrimonioPorSala>
                     )) : <tbody>
                     <tr>

@@ -4,13 +4,49 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 import {
     faArrowLeft,
-    faCircleInfo
 } from "@fortawesome/free-solid-svg-icons";
 import Header from "@/src/components/header/header";
-import CardHistorico from "@/src/components/card-historico/card-historico";
 import ListaHistorico from "@/src/components/lista-historico/lista-historico";
+import {useEffect, useState} from "react";
+import {useParams} from "next/navigation";
+import {getPatrimonio, getPatrimonioPorId} from "@/src/pages/api/patrimonioService";
+import {erro} from "@/src/utils/toast";
+
+type Patrimonio = {
+    denominacao: string;
+    imagem: string;
+    localizacaoID: string;
+    numeroPatrimonio: string;
+    patrimonioID: string;
+    statusPatrimonioID: string;
+    valor: number;
+}
 
 const DetalhePatrimonio = () => {
+
+    const [patrimonio, setPatrimonio] = useState<Patrimonio>()
+
+    const params = useParams();
+    const id = params?.id;
+
+    async function getPatrimonioId(){
+        try{
+            const dados = await getPatrimonioPorId(String(id))
+
+            setPatrimonio(dados)
+        }catch (err:any){
+            erro(err.message)
+        }
+    }
+
+    useEffect(() => {
+        if(!id) return;
+
+        getPatrimonioId();
+    }, [id]);
+
+    console.log(patrimonio);
+
     return (
         <>
             <Header>
@@ -30,7 +66,7 @@ const DetalhePatrimonio = () => {
                     </a>
 
                     <h1 id="titulo_patrimonio">
-                        Patrimônio: 1236808
+                        Patrimônio: {patrimonio?.numeroPatrimonio}
                     </h1>
 
                     <article className={styles.patrimonio_card}>
@@ -38,7 +74,7 @@ const DetalhePatrimonio = () => {
                             <dl>
                                 <dt>Denominação</dt>
                                 <dd>
-                                    NOTEBOOK ALTO DESEMPENHO P/ GAMER
+                                    {patrimonio?.denominacao}
                                 </dd>
                             </dl>
 
