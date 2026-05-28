@@ -1,6 +1,6 @@
 import {permanentRedirect} from "next/navigation";
 
-export async function main() {
+export async function getServerSideProps() {
     return {
         redirect: {
             destination: '/login',

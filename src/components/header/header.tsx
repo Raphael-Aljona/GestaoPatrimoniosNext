@@ -1,8 +1,33 @@
 import styles from "./header.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars, faChevronDown, faUser} from "@fortawesome/free-solid-svg-icons";
+import {useEffect, useState} from "react";
+import {decodeToken} from "@/src/utils/jwt";
+
+type Usuario = {
+    id: string;
+    // nome: string;
+    // email: string;
+    NIF: string;
+}
 
 const Header = () => {
+
+    const [usuario, setUsuario] = useState<Usuario>();
+
+    async function getUserSettings() {
+        const userInfos = await decodeToken();
+
+        setUsuario(userInfos);
+    }
+
+    useEffect(
+        () => {
+            getUserSettings()
+        }, [])
+
+    console.log(usuario)
+
     return (
         <>
             <header className={styles.topbar}>
