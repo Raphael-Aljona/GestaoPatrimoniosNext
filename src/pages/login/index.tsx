@@ -14,7 +14,7 @@ export default function Login() {
         e.preventDefault();
 
         try{
-            auth(nif, senha);
+            await auth(nif, senha);
 
             notificacao("Autenticado com sucesso!");
             await decodeToken();
