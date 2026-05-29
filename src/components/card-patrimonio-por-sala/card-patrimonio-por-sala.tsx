@@ -10,6 +10,7 @@ type Patrimonio = {
     imagem: string,
     localizacaoID: string,
     statusPatrimonioID: string,
+    dataTransferencia: string,
 }
 
 type CardProps = {
@@ -24,8 +25,7 @@ const CardPatrimonioPorSala = ({patrimonio, onclick}:CardProps) => {
             <tr>
                 <td>{patrimonio.numeroPatrimonio}</td>
                 <td>{patrimonio.denominacao}</td>
-                <td>Mesa</td>
-                <td>11/02/26</td>
+                <td>{patrimonio.dataTransferencia}</td>
 
                 <td>
                     <a

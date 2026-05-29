@@ -94,7 +94,6 @@ const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
                     <tr>
                         <th>Patrimônio</th>
                         <th>Denominação</th>
-                        <th>Tipo</th>
                         <th>Data transferência</th>
                         <th>Detalhes</th>
                         <th>Transferir</th>
