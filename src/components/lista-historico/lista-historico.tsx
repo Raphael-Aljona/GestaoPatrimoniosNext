@@ -25,7 +25,7 @@ const ListaHistorico = ({id}:ListaHistoricoProps) => {
 
     async function getLogPatrimonioPorId() {
         try {
-            const dados = await getLogPatrimonioId(String(id))
+            const dados = await getLogPatrimonioId(id)
 
             setLogPatrimonio(dados)
         } catch (err: any) {
