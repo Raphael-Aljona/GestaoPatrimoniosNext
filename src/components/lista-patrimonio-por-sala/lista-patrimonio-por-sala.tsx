@@ -1,11 +1,12 @@
 import styles from "./lista-patrimonio-por-sala.module.css"
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faSliders} from "@fortawesome/free-solid-svg-icons";
+import {faChevronLeft, faChevronRight, faSliders} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useState} from "react";
 import {getPatrimonio} from "@/src/pages/api/patrimonioService";
 import {erro} from "@/src/utils/toast";
 import CardPatrimonioPorSala from "@/src/components/card-patrimonio-por-sala/card-patrimonio-por-sala";
 import {router} from "next/client";
+import ReactPaginate from "react-paginate";
 
 
 type Patrimonio = {
@@ -16,6 +17,7 @@ type Patrimonio = {
     imagem: string,
     localizacaoID: string,
     statusPatrimonioID: string,
+    dataTransferencia: string,
 }
 
 type listaPatrimonio = {
@@ -25,6 +27,20 @@ type listaPatrimonio = {
 const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
 
     const [listaPatrimonioPorSala, setListaPatrimonioPorSala] = useState<Patrimonio[]>()
+
+    const [primeiroItem, setPrimeiroItem] = useState<number>(0)
+
+    const itemsPorPagina = 50;
+
+    const ultimoItem = primeiroItem + itemsPorPagina;
+    const itensAtuais = listaPatrimonioPorSala?.slice(primeiroItem, ultimoItem);
+    const contPaginas = listaPatrimonioPorSala ? Math.ceil(listaPatrimonioPorSala!.length / itemsPorPagina) : 10;
+
+    const alterarPagina = (event: any) => {
+        const newOffset = (event.selected * itemsPorPagina) % listaPatrimonioPorSala!.length;
+
+        setPrimeiroItem(newOffset);
+    };
 
     async function listagemPatrimonios() {
         try {
@@ -37,7 +53,6 @@ const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
             erro(error.message)
         }
     }
-
 
     useEffect(() => {
         if (!localizacaoID) return;
@@ -99,7 +114,7 @@ const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
                         <th>Transferir</th>
                     </tr>
                     </thead>
-                    {listaPatrimonioPorSala ? listaPatrimonioPorSala?.map(value => (
+                    {itensAtuais ? itensAtuais?.map(value => (
                         <CardPatrimonioPorSala key={value.patrimonioID}
                                                onclick={() => {
                                                    router.push(`/detalhe-produto/${value.patrimonioID}`)
@@ -114,47 +129,69 @@ const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
                 </table>
             </section>
 
-            <nav
-                className={styles.pagination}
-                aria-label="Paginação"
-            >
-                <button
-                    type="button"
-                    className={styles.pagination_button}
-                    aria-label="Página anterior"
-                >
-                    ‹
-                </button>
+            {/*<nav*/}
+            {/*    className={styles.pagination}*/}
+            {/*    aria-label="Paginação"*/}
+            {/*>*/}
+            {/*    <button*/}
+            {/*        type="button"*/}
+            {/*        className={styles.pagination_button}*/}
+            {/*        aria-label="Página anterior"*/}
+            {/*    >*/}
+            {/*        ‹*/}
+            {/*    </button>*/}
 
-                <a
-                    href="#"
-                    className={`${styles.pagination_link} ${styles.current}`}
-                    aria-current="page"
-                >
-                    1
-                </a>
+            {/*    <a*/}
+            {/*        href="#"*/}
+            {/*        className={`${styles.pagination_link} ${styles.current}`}*/}
+            {/*        aria-current="page"*/}
+            {/*    >*/}
+            {/*        1*/}
+            {/*    </a>*/}
 
-                <a
-                    href="#"
-                    className={styles.pagination_link}
-                >
-                    2
-                </a>
+            {/*    <a*/}
+            {/*        href="#"*/}
+            {/*        className={styles.pagination_link}*/}
+            {/*    >*/}
+            {/*        2*/}
+            {/*    </a>*/}
 
-                <a
-                    href="#"
-                    className={styles.pagination_link}
-                >
-                    3
-                </a>
+            {/*    <a*/}
+            {/*        href="#"*/}
+            {/*        className={styles.pagination_link}*/}
+            {/*    >*/}
+            {/*        3*/}
+            {/*    </a>*/}
 
-                <button
-                    type="button"
-                    className={styles.pagination_button}
-                    aria-label="Próxima página"
-                >
-                    ›
-                </button>
+            {/*    <button*/}
+            {/*        type="button"*/}
+            {/*        className={styles.pagination_button}*/}
+            {/*        aria-label="Próxima página"*/}
+            {/*    >*/}
+            {/*        ›*/}
+            {/*    </button>*/}
+            {/*</nav>*/}
+
+            <nav className={`${styles.pagination}`}>
+                <ReactPaginate
+                    breakLabel="..."
+                    nextLabel={<FontAwesomeIcon icon={faChevronRight}/>}
+                    previousLabel={<FontAwesomeIcon icon={faChevronLeft}/>}
+                    onPageChange={alterarPagina}
+                    pageRangeDisplayed={1}
+                    pageCount={contPaginas}
+                    renderOnZeroPageCount={null}
+
+                    containerClassName={styles.pagination}
+                    pageClassName={styles.pagination_link}
+                    pageLinkClassName={styles.pagination_link}
+
+                    previousClassName={styles.pagination_button}
+                    nextClassName={styles.pagination_button}
+
+                    activeClassName={styles.current}
+                />
+
             </nav>
 
         </>
