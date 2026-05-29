@@ -15,7 +15,6 @@ export async function getPatrimonioPorId(id: string){
     try{
         const response = await api.get(`Patrimonio/${id}`);
 
-        console.log(response.data);
         return response.data;
     }catch(err:any){
         throw new Error(err.message);

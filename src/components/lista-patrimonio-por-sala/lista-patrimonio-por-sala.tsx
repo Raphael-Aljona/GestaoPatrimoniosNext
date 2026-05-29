@@ -32,15 +32,12 @@ const ListaPatrimonioPorSala = ({localizacaoID}: listaPatrimonio) => {
 
             const listaFiltrada = dados.filter(value => value.localizacaoID == localizacaoID)
 
-            console.log(`lista filtrada: ${listaFiltrada}`)
-
             setListaPatrimonioPorSala(listaFiltrada)
         } catch (error: any) {
             erro(error.message)
         }
     }
 
-    console.log(`lista setada: ${listaPatrimonioPorSala}`)
 
     useEffect(() => {
         if (!localizacaoID) return;

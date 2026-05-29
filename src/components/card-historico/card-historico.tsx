@@ -29,11 +29,11 @@ const CardHistorico = ({localizacao, usuario,logPatrimonioID,patrimonioID,status
                     </td>
 
                     <td data-label="Origem">
-                        Sala 07/08
+                        Sem origem
                     </td>
 
                     <td data-label="Destino">
-                        Sala 09/10
+                        {localizacao}
                     </td>
 
                     <td data-label="Responsável">

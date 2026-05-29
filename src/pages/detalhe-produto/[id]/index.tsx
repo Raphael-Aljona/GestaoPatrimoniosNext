@@ -23,9 +23,22 @@ type Patrimonio = {
     valor: number;
 }
 
+type LogPatrimonio = {
+    logPatrimonioID: string
+    dataTransferencia: string
+    patrimonioID: string
+    denominacaoPatrimonio: string
+    tipoAlteracao: string
+    statusPatrimonio: string,
+    usuario: string,
+    localizacao: string
+}
+
 const DetalhePatrimonio = () => {
 
     const [patrimonio, setPatrimonio] = useState<Patrimonio>()
+    const [logPatrimonio, setLogPatrimonio] = useState<LogPatrimonio[]>()
+    const [ultimoLogPatrimonio, setultimoLogPatrimonio] = useState<LogPatrimonio>()
 
     const params = useParams();
     const id = params?.id;
@@ -40,10 +53,23 @@ const DetalhePatrimonio = () => {
         }
     }
 
+    async function getLogPatrimonioPorId() {
+        try {
+            const dados = await getLogPatrimonioId(String(id))
+
+            setLogPatrimonio(dados)
+
+            setultimoLogPatrimonio(dados[dados.length - 1])
+        } catch (err: any) {
+            erro(err.message)
+        }
+    }
+
     useEffect(() => {
         if (!id) return;
 
         getPatrimonioId();
+        getLogPatrimonioPorId()
     }, [id]);
 
     return (
@@ -79,27 +105,22 @@ const DetalhePatrimonio = () => {
                                 </dl>
 
                                 <dl>
-                                    <dt>Tipo</dt>
-                                    <dd>Mesa</dd>
-                                </dl>
-
-                                <dl>
                                     <dt>Data transferência</dt>
                                     <dd>
                                         <time dateTime="2026-02-09">
-                                            09/02/2026
+                                            {ultimoLogPatrimonio?.dataTransferencia}
                                         </time>
                                     </dd>
                                 </dl>
 
                                 <dl>
                                     <dt>Local Atual</dt>
-                                    <dd>Sala 09/10</dd>
+                                    <dd>{ultimoLogPatrimonio?.localizacao}</dd>
                                 </dl>
 
                                 <dl>
                                     <dt>Status Atual</dt>
-                                    <dd>Ativo</dd>
+                                    <dd>{ultimoLogPatrimonio?.statusPatrimonio}</dd>
                                 </dl>
                             </div>
                         </article>
@@ -110,7 +131,7 @@ const DetalhePatrimonio = () => {
                         aria-label="Lista de histórico do patrimônio"
                     >
                         <h2>Histórico</h2>
-                        <ListaHistorico id={String(id)}/>
+                        <ListaHistorico logPatrimonio={logPatrimonio!}/>
                     </section>
                 </main>
 

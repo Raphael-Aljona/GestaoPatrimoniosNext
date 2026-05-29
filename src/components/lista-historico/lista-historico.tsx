@@ -16,31 +16,10 @@ type LogPatrimonio = {
 }
 
 type ListaHistoricoProps = {
-    id: string
+    logPatrimonio: LogPatrimonio[]
 }
 
-const ListaHistorico = ({id}:ListaHistoricoProps) => {
-
-    const [logPatrimonio, setLogPatrimonio] = useState<LogPatrimonio[]>()
-
-    async function getLogPatrimonioPorId() {
-        try {
-            const dados = await getLogPatrimonioId(id)
-
-            setLogPatrimonio(dados)
-        } catch (err: any) {
-            erro(err.message)
-        }
-    }
-
-    useEffect(() => {
-        if(!id) return;
-
-        getLogPatrimonioPorId()
-    }, [])
-
-    console.log(`log patrimonio: ${logPatrimonio}`)
-
+const ListaHistorico = ({logPatrimonio}:ListaHistoricoProps) => {
     return (
       <>
           <table className={styles.history_table}>
