@@ -2,18 +2,29 @@ import {faCircleInfo} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import styles from "./card-historico.module.css";
 
-const CardHistorico = () => {
+type LogPatrimonio = {
+    logPatrimonioID: string
+    dataTransferencia: string
+    patrimonioID: string
+    denominacaoPatrimonio: string
+    tipoAlteracao: string
+    statusPatrimonio: string,
+    usuario: string,
+    localizacao: string
+}
+
+const CardHistorico = ({localizacao, usuario,logPatrimonioID,patrimonioID,statusPatrimonio,denominacaoPatrimonio,tipoAlteracao,dataTransferencia}:LogPatrimonio) => {
     return (
         <>
                 <tbody className={styles.history_table}>
                 <tr>
                     <td data-label="Data">
-                        11/02/2026
+                        {dataTransferencia}
                     </td>
 
                     <td data-label="Tipo de movimentação">
                                     <span className={styles.status_badge}>
-                                        Transferência
+                                        {tipoAlteracao}
                                     </span>
                     </td>
 
@@ -26,7 +37,7 @@ const CardHistorico = () => {
                     </td>
 
                     <td data-label="Responsável">
-                        Gustavo Lima
+                        {usuario}
                     </td>
 
                     <td data-label="Justificativa">

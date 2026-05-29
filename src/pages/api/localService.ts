@@ -5,9 +5,8 @@ export async function getLocal(){
     try{
         const response = await api.get('Localizacao')
 
-        console.log(response)
         return response.data
-    }   catch(err){
+    }   catch(err:any){
         throw new Error(err.message);
     }
 }

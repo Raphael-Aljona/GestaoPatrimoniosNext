@@ -11,6 +11,7 @@ import {useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import {getPatrimonio, getPatrimonioPorId} from "@/src/pages/api/patrimonioService";
 import {erro} from "@/src/utils/toast";
+import {getLogPatrimonioId} from "@/src/pages/api/logPatrimonioService";
 
 type Patrimonio = {
     denominacao: string;
@@ -29,23 +30,21 @@ const DetalhePatrimonio = () => {
     const params = useParams();
     const id = params?.id;
 
-    async function getPatrimonioId(){
-        try{
+    async function getPatrimonioId() {
+        try {
             const dados = await getPatrimonioPorId(String(id))
 
             setPatrimonio(dados)
-        }catch (err:any){
+        } catch (err: any) {
             erro(err.message)
         }
     }
 
     useEffect(() => {
-        if(!id) return;
+        if (!id) return;
 
         getPatrimonioId();
     }, [id]);
-
-    console.log(patrimonio);
 
     return (
         <>
@@ -110,7 +109,7 @@ const DetalhePatrimonio = () => {
                     aria-label="Lista de histórico do patrimônio"
                 >
                     <h2>Histórico</h2>
-                    <ListaHistorico/>
+                    <ListaHistorico id={String(id)}/>
                 </section>
             </main>
         </>
